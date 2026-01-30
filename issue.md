@@ -10,13 +10,26 @@
 
 This looks like precompiled messages (AST arrays) being surfaced to a runtime that expects strings, but only in **dev/Turbopack on Windows**.
 
-## Reproduction (in this repo)
+## Reproduction (external)
 
+Repro app repo (App Router + `next-intl` plugin with `precompile: true`):
+
+- Repo: `https://github.com/amannn/next-intl-bug-repro-keyboy21-precompile`
 - Branch: `cursor/next-intl-windows-dev-error-92a5`
-- CI: Windows workflow runs Playwright against dev server and asserts no console errors, intentionally failing.
-  - Workflow: `.github/workflows/windows-dev-console-errors.yml`
-  - Test: `tests/dev-console-errors.spec.ts`
-  - Playwright starts dev server via `webServer.command = "pnpm dev"` in `playwright.config.ts`
+
+CI reproduces on Windows by running Playwright against a dev server and failing on any console errors:
+
+- Workflow: `.github/workflows/windows-dev-console-errors.yml`
+- Playwright config: `playwright.config.ts` (`webServer.command = "pnpm dev"`)
+- Test: `tests/dev-console-errors.spec.ts` (navigates to `/en`, asserts no console errors)
+
+Local reproduction on Windows (from that repro repo branch):
+
+```bash
+pnpm install
+pnpm playwright install
+pnpm test:e2e
+```
 
 ## What we observed
 
@@ -38,7 +51,7 @@ Yet on Windows dev, the resolved message becomes an **array**.
 
 ### 2) Final Next config shows Turbopack rule converting `*.json` under `./messages/**/*` to `*.js`
 
-From `next.config.mjs` logging (`[next-config] finalConfig`):
+From `next.config.mjs` logging (`[next-config] finalConfig`) in the repro repo branch above:
 
 - `turbopack.rules['*.json']` includes loader `next-intl/extractor/catalogLoader`
 - `options.messages.precompile: true`
