@@ -1,6 +1,7 @@
 // @ts-check
 
 import createNextIntlPlugin from 'next-intl/plugin';
+import {inspect} from 'node:util';
 
 const withNextIntl = createNextIntlPlugin({
 	experimental: {
@@ -17,4 +18,8 @@ const withNextIntl = createNextIntlPlugin({
 /** @type {import('next').NextConfig} */
 const nextConfig = {};
 
-export default (withNextIntl(nextConfig));
+const finalConfig = withNextIntl(nextConfig);
+
+console.log('[next-config] finalConfig:', inspect(finalConfig, {colors: false, depth: null}));
+
+export default finalConfig;

@@ -1,0 +1,35 @@
+name: Windows dev console errors reproduction
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  playwright-dev-console-errors:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          cache: pnpm
+          node-version: 20
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm playwright install
+
+      - name: Run Playwright (starts pnpm dev)
+        run: pnpm test:e2e
