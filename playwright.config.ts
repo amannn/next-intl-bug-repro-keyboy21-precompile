@@ -16,6 +16,8 @@ export default defineConfig({
     command: 'pnpm dev',
     port: 3000,
     reuseExistingServer: !process.env.CI,
+    stderr: 'pipe',
+    stdout: 'pipe',
     timeout: 180_000
   },
   projects: [
