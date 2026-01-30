@@ -1,0 +1,7 @@
+{
+	"HomePage": {
+		"header": {
+			"balance": "Баланс : {balance} сум"
+		}
+	}
+}
