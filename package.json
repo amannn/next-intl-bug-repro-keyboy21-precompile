@@ -11,7 +11,7 @@
   "dependencies": {
     "babel-plugin-react-compiler": "^1.0.0",
     "next": "^16.1.6",
-    "next-intl": "^4.8.0",
+    "next-intl": "0.0.0-canary-76127ff",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
